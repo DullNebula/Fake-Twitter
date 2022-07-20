@@ -1,5 +1,5 @@
 const { GraphQLList, GraphQLID, GraphQLString } = require('graphql')
-const { UserType } = require('./types')
+const { UserType, PostType } = require('./types')
 const {User} = require('../models')
 
 //All users query
@@ -41,4 +41,14 @@ const postById = {
     }
 }
 
-module.exports = {users, user, posts, postById}
+const postBySlug = {
+    type: PostType,
+    description: 'Query post by slug value',
+    args: {
+        slug: {type: GraphQLString}
+    },
+    async resolve(parent, args){
+        return Quiz.findOne({slug: args.slug})
+    }
+}
+module.exports = {users, user, posts, postById, postBySlug}
